@@ -12,11 +12,27 @@ public class PageController {
 	@RequestMapping(value={"/","/home","/index"})
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title" , "Home");
+		mv.addObject("clickhome", Boolean.TRUE);
 		mv.addObject("greeting","Welcome To Spring Web MVC");
 		return mv;
 	}
 
+	@RequestMapping(value="/about")
+	public ModelAndView about(){
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title" , "About Us");
+		mv.addObject("clickabout", Boolean.TRUE);
+		return mv;
+	}
 	
+	@RequestMapping(value="/contact")
+	public ModelAndView contact(){
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title" , "Contact Us");
+		mv.addObject("clickcontact", Boolean.TRUE);
+		return mv;
+	}
 	
 	
 /*	Demonstration Purpose - How to passed value using url*/
