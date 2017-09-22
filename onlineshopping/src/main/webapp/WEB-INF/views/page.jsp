@@ -22,6 +22,9 @@
 <meta name="author" content="">
 
 <title>Online Shopping - ${title}</title>
+<script type="text/javascript">
+	window.menu = '${title}';
+</script>
 
 <!-- Bootstrap core CSS -->
 <link href="${css}/bootstrap.min.css" rel="stylesheet">
@@ -59,6 +62,7 @@
 	<script src="${js}/jquery.min.js"></script>
 	<script src="${js}/popper.min.js"></script>
 	<script src="${js}/bootstrap.min.js"></script>
+	<script src="${js}/myapp.js"></script>
 
 </body>
 
