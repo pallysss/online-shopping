@@ -6,4 +6,5 @@ import com.ply.shoppingbackend.dto.Category;
 
 public interface CategoryDAO {
 	public List<Category> list();
+	Category getCategory(Integer id);
 }

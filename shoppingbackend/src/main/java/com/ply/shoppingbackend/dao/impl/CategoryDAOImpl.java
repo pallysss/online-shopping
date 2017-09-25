@@ -55,4 +55,15 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return categories;
 	}
 
+	@Override
+	public Category getCategory(Integer id) {
+		// TODO Auto-generated method stub
+		for (Category category : categories) {
+			if (category.getId().compareTo(id) == 0) {
+				return category;
+			}
+		}
+		return null;
+	}
+
 }
