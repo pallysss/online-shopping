@@ -13,9 +13,17 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.3.11.RELEASE</spring.version>
-		<h2.version>1.4.196</h2.version>
+		<h2.version>1.4.197</h2.version>
 		<hibernate.version>5.2.11.FINAL</hibernate.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>Talan Repo</id>
+			<name>Talan Repo</name>
+			<url>http://nexus.talanlabs.com/content/repositories/releases</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<!-- JUnit -->
@@ -40,6 +48,21 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache/batik-all -->
+		<dependency>
+			<groupId>org.apache</groupId>
+			<artifactId>batik-all</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
+
 		<!-- H2 database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -60,6 +83,9 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.1.1</version>
 		</dependency>
+
+
+
 
 
 

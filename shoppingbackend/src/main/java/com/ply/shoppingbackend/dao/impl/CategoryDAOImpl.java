@@ -1,74 +1,40 @@
 package com.ply.shoppingbackend.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ply.shoppingbackend.base.BaseDaoImpl;
 import com.ply.shoppingbackend.dao.CategoryDAO;
-import com.ply.shoppingbackend.dto.Category;
+import com.ply.shoppingbackend.model.Category;
 
-@Repository("categoryDAO")
-@Transactional
-public class CategoryDAOImpl implements CategoryDAO {
+@Repository("categoryDAOImpl")
+public class CategoryDAOImpl extends BaseDaoImpl<Category, String> implements CategoryDAO {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Category> list() {
+	public List<Category> listCategory() {
 		// fethced from entity name / not a table name
-		String selectActiveCategory = "From Category WHERE active = :active";
-		Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
-		query.setParameter("active", Boolean.TRUE);
+		String selectActiveCategory = "from Category";
+		Query query = getSession().createQuery(selectActiveCategory);
+		//query.setParameter("active", Boolean.TRUE);
+		return query.list();
+	}
+	
+	@Override
+	public List<Category> getActiveCategories(){
+		CriteriaBuilder cb = getSession().getCriteriaBuilder();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Root<Category> root = cq.from(Category.class);
+		cq.select(root).where(cb.equal(root.get("active"), Boolean.TRUE));
+		Query<Category> query = getSession().createQuery(cq);
 		return query.getResultList();
 	}
 
-	@Override
-	public Category getCategory(Integer id) {
-		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().get(Category.class, id);
-	}
-
-	@Override
-	public Boolean add(Category category) {
-		try {
-			sessionFactory.getCurrentSession().persist(category);
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Boolean.FALSE;
-		}
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public Boolean update(Category category) {
-		// TODO Auto-generated method stub
-		try {
-			sessionFactory.getCurrentSession().update(category);
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Boolean.FALSE;
-		}
-	}
-
-	@Override
-	public Boolean delete(Category category) {
-		// TODO Auto-generated method stub
-		category.setActive(Boolean.FALSE);
-		try {
-			sessionFactory.getCurrentSession().update(category);
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Boolean.FALSE;
-		}
-	}
 
 }

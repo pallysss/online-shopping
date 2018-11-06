@@ -8,14 +8,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ply.shoppingbackend.dao.CategoryDAO;
-import com.ply.shoppingbackend.dto.Category;
+import com.ply.shoppingbackend.model.Category;
+import com.ply.shoppingbackend.service.CategoryService;
 
 @Controller
 public class PageController {
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	private CategoryService categoryService;
 	 
+	@RequestMapping("/test")
+	public ModelAndView test() {
+		ModelAndView mv = new ModelAndView("test");
+		mv.addObject("title", "Test");
+		return mv;
+	}
+	
 	@RequestMapping(value={"/","/home","/index"})
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView("page");
@@ -23,7 +34,7 @@ public class PageController {
 		mv.addObject("clickhome", Boolean.TRUE);
 		mv.addObject("greeting","Welcome To Spring Web MVC");
 		
-		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("categories", categoryService.getCategories());
 		return mv;
 	}
 
@@ -49,18 +60,18 @@ public class PageController {
 		mv.addObject("title" , "All Products");
 		mv.addObject("clickAllProducts", Boolean.TRUE);
 		
-		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("categories", categoryService.getCategories());
 		return mv;
 	}
 	
 	@RequestMapping(value= "/show/category/{id}/products")
-	public ModelAndView showCategoryProducts(@PathVariable("id") Integer id){
+	public ModelAndView showCategoryProducts(@PathVariable("id") String id){
 		ModelAndView mv = new ModelAndView("page");
-		Category category = categoryDAO.getCategory(id);
+		Category category = categoryDAO.getById(id);
 		
 		mv.addObject("title" , category.getName());
 		
-		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("categories", categoryService.getCategories());
 		mv.addObject("category", category);
 		mv.addObject("clickCategoryProducts", Boolean.TRUE);
 		return mv;
